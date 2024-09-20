@@ -1,0 +1,64 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>org.nex.kui</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Kui</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="emma.soderberg@cs.lth.se" url="https://portal.research.lu.se/sv/persons/emma-s%C3%B6derberg">N.E.X. Lab</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    Kui is a plugin that enable gaze-based assistance for developers.
+    Kui is built on top of IntelliJ’s SDK, with wide compatibility with the entire family of JetBrains IDEs to
+    track developers’ IDE interactions and eye gaze data. For more information, please visit our website
+    <a href="https://github.com/PengKuang/kui-jb">Kui</a>.
+    ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <!--    Kui does not require the following dependencies, because it does not use language-specific PSI.-->
+    <!--    <depends>com.intellij.modules.python</depends>-->
+    <!--    <depends>com.intellij.java</depends>-->
+    <!--    <depends>com.intellij.clion</depends>-->
+    <!--    <depends>org.jetbrains.android</depends>-->
+    <!--    <depends>com.intellij.modules.androidstudio</depends>-->
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="api.RealtimeDataImpl"/>
+        <notificationGroup id="Kui Notification Group"
+                           displayType="BALLOON"/>
+    </extensions>
+
+
+
+    <actions>
+        <action id="Kui.StartStopTracking"
+                class="actions.StartStopTrackingAction"
+                text="Start Tracking"
+                icon="AllIcons.Actions.ToggleVisibility">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+        <action id="Kui.PauseResumeTracking"
+                class="actions.PauseResumeTrackingAction"
+                text="Pause Tracking">
+            <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="Kui.StartStopTracking"/>
+        </action>
+        <action id="Kui.Config" class="actions.ConfigAction" text="Configuration"
+                description="Configure tracking options">
+            <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="Kui.PauseResumeTracking"/>
+        </action>
+        <group id="Kui.AddLabelActionGroup" class="actions.AddLabelActionGroup" text="Add Label"
+               description="Add label" popup="true" icon="AllIcons.Actions.Edit">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </group>
+    </actions>
+</idea-plugin>
