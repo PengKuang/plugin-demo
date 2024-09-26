@@ -253,7 +253,7 @@ public class EyeTracker implements Disposable {
                 Element aSTStructure = getASTStructureElement(psiElement);
                 gaze.appendChild(aSTStructure);
                 lastElement = psiElement;
-//                System.out.println(gaze.getAttribute("timestamp") + " " + System.currentTimeMillis());
+                System.out.println(gaze.getAttribute("timestamp") + " " + System.currentTimeMillis());
                 handleElement(gaze);
             }
         }));
@@ -397,7 +397,7 @@ public class EyeTracker implements Disposable {
         if (eyeTrackerDataHandler != null && isRealTimeDataTransmitting) {
             eyeTrackerDataHandler.accept(element);
         } else if (eyeTrackerDataHandler == null) {
-//            throw new RuntimeException("eyeTrackerDataHandler is null");
+            throw new RuntimeException("eyeTrackerDataHandler is null");
         }
     }
 

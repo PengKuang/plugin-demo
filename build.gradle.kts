@@ -66,7 +66,9 @@ dependencies {
         zipSigner()
         instrumentationTools()
 
-    testFramework(TestFrameworkType.Platform)
+        testFramework(TestFrameworkType.Platform)
+
+        testFramework(TestFrameworkType.Platform)
 
 //    pluginConfiguration {
 //        version = providers.gradleProperty("pluginVersion")

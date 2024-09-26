@@ -3,7 +3,7 @@ package actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.jetbrains.annotations.NotNull;
-//import trackers.ScreenRecorder;
+import trackers.ScreenRecorder;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
  * This class is the action for pausing/resuming tracking.
  */
 public class PauseResumeTrackingAction extends AnAction {
-//    private final ScreenRecorder screenRecorder = ScreenRecorder.getInstance();
+    private final ScreenRecorder screenRecorder = ScreenRecorder.getInstance();
 
     /**
      * Update the text of the action button. If the tracking is not started, the button is disabled.
@@ -41,7 +41,7 @@ public class PauseResumeTrackingAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         if (StartStopTrackingAction.isPaused()) {
-//            screenRecorder.resumeRecording();
+            screenRecorder.resumeRecording();
             StartStopTrackingAction.resumeTracking();
             AddLabelAction.setIsEnabled(true);
             ConfigAction.setIsEnabled(false);
@@ -50,11 +50,11 @@ public class PauseResumeTrackingAction extends AnAction {
             StartStopTrackingAction.pauseTracking();
             ConfigAction.setIsEnabled(false);
             AddLabelAction.setIsEnabled(false);
-//            try {
-//                screenRecorder.pauseRecording();
-//            } catch (IOException ex) {
-//                throw new RuntimeException(ex);
-//            }
+            try {
+                screenRecorder.pauseRecording();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

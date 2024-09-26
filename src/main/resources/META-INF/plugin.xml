@@ -38,8 +38,6 @@
                            displayType="BALLOON"/>
     </extensions>
 
-
-
     <actions>
         <action id="Kui.StartStopTracking"
                 class="actions.StartStopTrackingAction"

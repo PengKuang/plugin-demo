@@ -9,7 +9,7 @@ import entity.Config;
 import org.jetbrains.annotations.NotNull;
 import trackers.EyeTracker;
 import trackers.IDETracker;
-//import trackers.ScreenRecorder;
+import trackers.ScreenRecorder;
 import utils.AvailabilityChecker;
 
 import javax.swing.*;
@@ -35,10 +35,10 @@ public class StartStopTrackingAction extends AnAction {
      * This variable is the eye tracker.
      */
     private static EyeTracker eyeTracker;
-//    /**
-//     * This variable is the screen recorder.
-//     */
-//    private final ScreenRecorder screenRecorder = ScreenRecorder.getInstance();
+    /**
+     * This variable is the screen recorder.
+     */
+    private final ScreenRecorder screenRecorder = ScreenRecorder.getInstance();
     /**
      * This variable is the configuration.
      */
@@ -90,10 +90,10 @@ public class StartStopTrackingAction extends AnAction {
                         ? projectPath : config.getDataOutputPath();
                 realDataOutputPath += "/" + System.currentTimeMillis() + "/";
 
-//                if (config.getCheckBoxes().get(2)) {
-//                    screenRecorder.setDataOutputPath(realDataOutputPath);
-//                    screenRecorder.startRecording();
-//                }
+                if (config.getCheckBoxes().get(2)) {
+                    screenRecorder.setDataOutputPath(realDataOutputPath);
+                    screenRecorder.startRecording();
+                }
 
                 iDETracker = IDETracker.getInstance();
                 iDETracker.setProjectPath(projectPath);
@@ -121,9 +121,9 @@ public class StartStopTrackingAction extends AnAction {
                 if (config.getCheckBoxes().get(1) && eyeTracker != null) {
                     eyeTracker.stopTracking();
                 }
-//                if (config.getCheckBoxes().get(2)) {
-//                    screenRecorder.stopRecording();
-//                }
+                if (config.getCheckBoxes().get(2)) {
+                    screenRecorder.stopRecording();
+                }
                 eyeTracker = null;
             }
         } catch (ParserConfigurationException | TransformerException | IOException | InterruptedException ex) {
