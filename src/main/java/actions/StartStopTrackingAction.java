@@ -2,6 +2,7 @@ package actions;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import components.ConfigDialog;
@@ -153,4 +154,9 @@ public class StartStopTrackingAction extends AnAction {
         }
     }
 
+    /** resolve the PluginException: ActionUpdateThread.OLD_EDT is deprecated and going to be removed soon **/
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
 }

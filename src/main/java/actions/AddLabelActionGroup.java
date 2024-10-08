@@ -25,17 +25,23 @@ public class AddLabelActionGroup extends DefaultActionGroup {
         if (!defaultLabelsLoaded && config.configExists()) {
             config.loadFromJson();
             ActionManager actionManager = ActionManager.getInstance();
-            DefaultActionGroup actionGroup = (DefaultActionGroup) actionManager.getAction("CodeGRITS.AddLabelActionGroup");
+            DefaultActionGroup actionGroup = (DefaultActionGroup) actionManager.getAction("Kui.AddLabelActionGroup");
             actionGroup.removeAll();
             List<String> labels = config.getLabels();
             for (String label : labels) {
                 AddLabelAction addLabelAction = new AddLabelAction();
                 addLabelAction.setDescription(label);
-                actionManager.registerAction("CodeGRITS.AddLabel.[" + label + "]", addLabelAction);
+                actionManager.registerAction("Kui.AddLabel.[" + label + "]", addLabelAction);
                 actionGroup.add(addLabelAction);
             }
             defaultLabelsLoaded = true;
         }
+    }
+
+    /** resolve the PluginException: ActionUpdateThread.OLD_EDT is deprecated and going to be removed soon **/
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 
     public static void setIsEnabled(boolean isEnabled) {

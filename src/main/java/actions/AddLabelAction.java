@@ -2,6 +2,7 @@ package actions;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +28,7 @@ public class AddLabelAction extends AnAction {
      */
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        Notification notification = new Notification("CodeGRITS Notification Group", "Add label",
+        Notification notification = new Notification("Kui Notification Group", "Add label",
                 "Successfully add label \"" + description + "\"!", NotificationType.INFORMATION);
         notification.notify(e.getProject());
     }
@@ -38,6 +39,12 @@ public class AddLabelAction extends AnAction {
 
     public static void setIsEnabled(boolean isEnabled) {
         AddLabelAction.isEnabled = isEnabled;
+    }
+
+    /** resolve the PluginException: ActionUpdateThread.OLD_EDT is deprecated and going to be removed soon **/
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 
    // @Override

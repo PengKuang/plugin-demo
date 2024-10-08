@@ -1,5 +1,6 @@
 package actions;
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -26,6 +27,12 @@ public class ConfigAction extends AnAction {
             throw new RuntimeException(ex);
         }
         configDialog.show();
+    }
+
+    /** resolve the PluginException: ActionUpdateThread.OLD_EDT is deprecated and going to be removed soon **/
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 
     public static void setIsEnabled(boolean isEnabled) {

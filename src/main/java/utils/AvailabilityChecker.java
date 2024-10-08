@@ -66,6 +66,8 @@ public class AvailabilityChecker {
                 found_eyetrackers = tr.find_all_eyetrackers()
                 if found_eyetrackers == ():
                     print('Not Found')
+                elif found_eyetrackers[0].device_name == '' and found_eyetrackers[0].model == 'IS4_Large_Peripheral':
+                    print('Tobii 4C')
                 else:
                     print(found_eyetrackers[0].device_name)
                 """;
@@ -115,7 +117,6 @@ public class AvailabilityChecker {
         } catch (IOException e){
             e.printStackTrace();
         }
-
 
         return line;
     }

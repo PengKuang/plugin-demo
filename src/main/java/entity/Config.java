@@ -25,8 +25,8 @@ public class Config implements Serializable {
     private String dataOutputPath;
     private Integer eyeTrackerDevice;
     //TODO: change mac path
-    private static final String macConfigPath = System.getProperty("user.home") + "/Library/CodeGRITS/codegrits_config.json";
-    private static final String otherConfigPath = "codegrits_config.json";
+    private static final String macConfigPath = System.getProperty("user.home") + "/Library/Kui/kui_config.json";
+    private static final String otherConfigPath = "kui_config.json";
 
     /**
      * The constructor of the Config class.
@@ -83,7 +83,7 @@ public class Config implements Serializable {
 
         if (OSDetector.isMac()) {
             try {
-                File directory = new File(System.getProperty("user.home") + "/Library/CodeGRITS/");
+                File directory = new File(System.getProperty("user.home") + "/Library/Kui/");
                 if (!directory.exists()) directory.mkdir();
                 FileWriter fileWriter = new FileWriter(macConfigPath);
                 fileWriter.write(jsonObject.toString());

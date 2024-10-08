@@ -35,8 +35,8 @@ public class ConfigDialog extends DialogWrapper {
     private final JPanel panel = new JPanel();
     private static List<JTextField> labelAreas = new ArrayList<>();
 
-    private static final TextFieldWithBrowseButton pythonInterpreterTextField = new TextFieldWithBrowseButton();
-    private static final TextFieldWithBrowseButton dataOutputTextField = new TextFieldWithBrowseButton();
+    private TextFieldWithBrowseButton pythonInterpreterTextField;
+    private TextFieldWithBrowseButton dataOutputTextField;
 
     private final JComboBox<Double> freqCombo = new ComboBox<>();
     private final JComboBox<String> deviceCombo = new ComboBox<>(new String[]{"Mouse"});
@@ -54,8 +54,10 @@ public class ConfigDialog extends DialogWrapper {
      */
     public ConfigDialog(Project project) throws IOException, InterruptedException {
         super(true);
+        this.pythonInterpreterTextField = new TextFieldWithBrowseButton();
+        this.dataOutputTextField = new TextFieldWithBrowseButton();
         init();
-        setTitle("CodeGRITS Configuration");
+        setTitle("Kui Configuration");
         setSize(500, 500);
         setAutoAdjustable(true);
         setResizable(false);
@@ -83,7 +85,15 @@ public class ConfigDialog extends DialogWrapper {
                     List<String> freqList = AvailabilityChecker.getFrequencies(getPythonInterpreter());
                     freqCombo.removeAllItems();
                     for (String freq : freqList) {
-                        freqCombo.addItem(Double.parseDouble(freq));
+                        String freqInput = freq.replace(",", "").trim();
+                        try {
+                            double freq_ = Double.parseDouble(freqInput);
+                            freqCombo.addItem(freq_);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid number format: " + freqInput);
+                            throw new RuntimeException(e);
+                        }
+
                     }
                 } else { //use mouse and default freq
                     deviceCombo.removeAllItems();
@@ -170,7 +180,7 @@ public class ConfigDialog extends DialogWrapper {
     public void updateActionGroup() {
         //update action group
         ActionManager actionManager = ActionManager.getInstance();
-        DefaultActionGroup actionGroup = (DefaultActionGroup) actionManager.getAction("CodeGRITS.AddLabelActionGroup");
+        DefaultActionGroup actionGroup = (DefaultActionGroup) actionManager.getAction("Kui.AddLabelActionGroup");
         List<String> labels = getCurrentLabels();
         //reset action group
         AnAction[] actions = actionGroup.getChildActionsOrStubs();
@@ -185,7 +195,7 @@ public class ConfigDialog extends DialogWrapper {
         for (String label : labels) {
             AddLabelAction newLabel = new AddLabelAction();
             newLabel.setDescription(label);
-            String id = "CodeGRITS.AddLabelAction.[" + label + "]";
+            String id = "Kui.AddLabelAction.[" + label + "]";
             if (actionManager.getAction(id) != null) actionManager.unregisterAction(id);
             actionManager.registerAction(id, newLabel);
             actionGroup.add(newLabel);
@@ -376,7 +386,14 @@ public class ConfigDialog extends DialogWrapper {
                         List<String> freqList = AvailabilityChecker.getFrequencies(getPythonInterpreter());
                         freqCombo.removeAllItems();
                         for (String freq : freqList) {
-                            freqCombo.addItem(Double.parseDouble(freq));
+                            String freqInput = freq.replace(",", "").trim();
+                            try {
+                                double freq_ = Double.parseDouble(freqInput);
+                                freqCombo.addItem(freq_);
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid number format: " + freqInput);
+                                throw new RuntimeException(e);
+                            }
                         }
                         new AlertDialog("Eye tracker found.", AllIcons.General.InspectionsOK).show();
                     }
@@ -518,7 +535,7 @@ public class ConfigDialog extends DialogWrapper {
      *
      * @return The python interpreter path in the configuration dialog.
      */
-    public static String getPythonInterpreter() {
+    public String getPythonInterpreter() {
         if (ProjectManager.getInstance().getOpenProjects().length == 0) {
             return "python";
         }
@@ -535,7 +552,7 @@ public class ConfigDialog extends DialogWrapper {
      *
      * @return The data output path in the configuration dialog.
      */
-    public static String getDataOutputPath() {
+    public String getDataOutputPath() {
         return dataOutputTextField.getText().equals(selectDataOutputPlaceHolder)
                 ? selectDataOutputPlaceHolder : dataOutputTextField.getText();
     }

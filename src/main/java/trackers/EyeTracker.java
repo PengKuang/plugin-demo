@@ -116,7 +116,7 @@ public class EyeTracker implements Disposable {
      * @param sampleFrequency   The sample frequency of the eye tracker.
      * @param isUsingMouse      Whether the mouse is used as the eye tracker.
      */
-    public EyeTracker(String pythonInterpreter, double sampleFrequency, boolean isUsingMouse) throws ParserConfigurationException {
+    public EyeTracker(String pythonInterpreter, String deviceName, double sampleFrequency, boolean isUsingMouse) throws ParserConfigurationException {
         // designed specifically for the real-time data API
         this(); // call default constructor
         if (isUsingMouse) {
@@ -156,7 +156,7 @@ public class EyeTracker implements Disposable {
         if (deviceIndex == 0) {
             setting.setAttribute("eye_tracker", "Mouse");
         } else {
-            setting.setAttribute("eye_tracker", "Tobii Pro Fusion");
+            setting.setAttribute("eye_tracker", "Tobii 4C");
         }
         setting.setAttribute("sample_frequency", String.valueOf(sampleFrequency));
         track();
@@ -397,7 +397,7 @@ public class EyeTracker implements Disposable {
         if (eyeTrackerDataHandler != null && isRealTimeDataTransmitting) {
             eyeTrackerDataHandler.accept(element);
         } else if (eyeTrackerDataHandler == null) {
-            throw new RuntimeException("eyeTrackerDataHandler is null");
+           //throw new RuntimeException("eyeTrackerDataHandler is null");
         }
     }
 
